@@ -1,14 +1,160 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
-</head>
-<body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
-</body>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Cascata, Especificidade e Combinadores</title>
+  </head>
+  <body>
+    <header>
+      <h1>Cascata, Especificidade e Combinadores</h1>
+      <nav aria-label="Navegação da página">
+        <ul>
+          <li><a href="./cascata.html">Cascata</a></li>
+          <li><a href="./especificidade.html">Especificidade</a></li>
+          <li><a href="./combinadores.html">Combinadores</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      
+
+      <section id="especificidade">
+        <h2>Especificidade</h2>
+        <p>
+          Especificidade é uma “pontuação” que mede quão específico é um seletor. Quanto maior
+          a pontuação, maior a prioridade da regra. Uma forma comum de pensar é em 4 grupos:
+          (inline, IDs, classes/atributos/pseudo-classes, elementos/pseudo-elementos).
+        </p>
+        <ul>
+          <li><strong>Estilo inline:</strong> aplica no atributo style do elemento — pontuação mais alta.</li>
+          <li><strong>ID:</strong> cada <#id aumenta bastante a especificidade.</li>
+          <li><strong>Classes, atributos e pseudo-classes:</strong> .classe, [atributo], :hover, etc.</li>
+          <li><strong>Elementos e pseudo-elementos:</strong> div, p, h1, etc.</li>
+        </ul>
+        /* Vence pelo tipo de seletor */
+#menu { color: green; }        /* mais específico que .menu */
+.menu { color: blue; }
+nav { color: red; }
+
+/* Inline vence todos os de cima */
+&lt;nav id="menu" class="menu" style="color: purple"&gt;...&lt;/nav&gt;
+        <p>Empates de especificidade são decididos pela ordem: a última regra lida vence.</p>
+      </section>
+
+      <section id="combinadores">
+        <h2>Combinadores</h2>
+        <p>
+          Combinadores conectam seletores para indicar relacionamentos na árvore do HTML.
+        </p>
+        <article>
+          <h3>Tipos de combinadores</h3>
+          <ul>
+            <li>
+              <strong>Descendente (espaço):</strong> A B seleciona B dentro de A em qualquer nível.
+              .card p { /* qualquer &lt;p&gt; dentro de .card */ }
+            </li>
+            <li>
+              <strong>Filho direto (&gt;):</strong> A &gt; B seleciona apenas filhos imediatos.
+              ul &gt; li { /* &lt;li&gt; que são filhos diretos de &lt;ul&gt; */ }
+            </li>
+            <li>
+              <strong>Irmão adjacente (+):</strong> A + B seleciona o primeiro irmão imediatamente após A.
+              h2 + p { /* o primeiro &lt;p&gt; logo depois de um &lt;h2&gt; */ }
+            </li>
+            <li>
+              <strong>Irmãos gerais (~):</strong> A ~ B seleciona todos os irmãos posteriores no mesmo nível.
+              h2 ~ p { /* todos os &lt;p&gt; depois de um &lt;h2&gt; no mesmo pai */ }
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="exemplos">
+        <h2>Exemplos práticos</h2>
+
+        <h3>HTML de exemplo</h3>
+        &lt;div class="card"&gt;
+  &lt;h2&gt;Título&lt;/h2&gt;
+  &lt;p&gt;Parágrafo 1&lt;/p&gt;
+  &lt;p&gt;Parágrafo 2&lt;/p&gt;
+  &lt;div class="detalhes"&gt;
+    &lt;p&gt;Parágrafo dentro de .detalhes&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;ul class="lista"&gt;
+  &lt;li&gt;Item A&lt;/li&gt;
+  &lt;li&gt;Item B&lt;/li&gt;
+&lt;/ul&gt;
+
+        <h3>CSS ilustrativo (não aplicado aqui)</h3>
+        /* Descendente: qualquer p dentro de .card */
+.card p { color: blue; }
+
+/* Filho direto: apenas li que são filhos imediatos de ul */
+ul.lista &gt; li { font-weight: bold; }
+
+/* Irmão adjacente: apenas o primeiro p após h2 */
+h2 + p { text-decoration: underline; }
+
+/* Irmãos gerais: todos os p depois de h2 no mesmo contêiner */
+h2 ~ p { font-style: italic; }
+
+/* Especificidade em ação */
+#destaque { color: green; }     /* mais específico que .destaque */
+.destaque { color: red; }
+p { color: gray; }              /* menos específico que os acima */
+      </section>
+    </main>
+
+    <footer>
+      <p>Conteúdo educativo: cascata, especificidade e combinadores em CSS, sem estilização aplicada.</p>
+    </footer>
+    <section id="box-model-display">
+        <h2>Box Model e Display</h2>
+      
+        <article>
+          <h3>Box Model</h3>
+          <p>
+            O Box Model é a forma como o CSS representa cada elemento como uma “caixa” retangular.
+            Essa caixa é composta por quatro áreas principais:
+          </p>
+          <ul>
+            <li><strong>Content:</strong> o conteúdo real (texto, imagem, etc.).</li>
+            <li><strong>Padding:</strong> espaço interno entre o conteúdo e a borda.</li>
+            <li><strong>Border:</strong> contorno da caixa.</li>
+            <li><strong>Margin:</strong> espaço externo entre a borda e outros elementos.</li>
+          </ul>
+          <p>
+            A propriedade box-sizing define como o tamanho total da caixa é calculado:
+          </p>
+          <ul>
+            <li>content-box: o tamanho considera apenas o conteúdo (padrão).</li>
+            <li>border-box: o tamanho inclui padding e borda (mais usado).</li>
+          </ul>
+          
+       
+      
+        
+          <h3>Display</h3>
+          <p>
+            A propriedade display define como um elemento se comporta na renderização da página.
+            Os principais valores são:
+          </p>
+          <ul>
+            <li><strong>block:</strong> ocupa toda a largura disponível e quebra linha (ex: div, p, h1).</li>
+            <li><strong>inline:</strong> ocupa apenas o espaço necessário e não quebra linha 
+                (ex: span, a, strong).</li>
+            <li><strong>inline-block:</strong> combina características dos dois: não quebra linha, mas aceita padding e margin.</li>
+          </ul>
+          <p>Exemplo prático:</p>
+         
+          <p>
+            É importante entender o tipo de display padrão de cada elemento para aplicar estilos corretamente.
+          </p>
+        
+      </section>
+  </body>
 </html>
